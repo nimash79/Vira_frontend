@@ -20,7 +20,9 @@ const ZoneSettingsPage = () => {
         <p className="header-title">{t("zoneSettingsPage:title")}</p>
         <div></div>
       </div>
-      <div className="custom-table-header">{t("zoneSettingsPage:wired_zone")}</div>
+      <div className="custom-table-header">
+        {t("zoneSettingsPage:wired_zone")}
+      </div>
       <table className="custom-table with-header">
         <thead>
           <tr>

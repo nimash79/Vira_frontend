@@ -79,7 +79,7 @@ const HomePage = () => {
             }
             onClick={() => setSendMethod("wifi")}
           >
-            <WifiIcon />
+            <WifiIcon active={sendMethod === "wifi"} />
             <p>{t("homePage:wifi")}</p>
           </div>
           <div
@@ -88,7 +88,7 @@ const HomePage = () => {
             }
             onClick={() => setSendMethod("sms")}
           >
-            <SmsIcon />
+            <SmsIcon active={sendMethod === "sms"} />
             <p>{t("homePage:sms")}</p>
           </div>
         </div>

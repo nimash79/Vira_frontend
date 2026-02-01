@@ -1,13 +1,14 @@
 /* Forms */
 .custom-input-container {
   border-radius: 8px;
-  border: 1px solid var(--primary_300);
+  border: 1px solid var(--neutral_40);
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 56px;
   padding: 0 24px;
   position: relative;
+  color: var(--neutral_40);
 }
 .custom-input-container .label {
   font-size: 14px;
@@ -29,13 +30,13 @@
   color: var(--neutral_e9);
 }
 .custom-input::placeholder {
-  color: var(--neutral_e9);
+  color: var(--neutral_60);
 }
 .custom-input.without-margin {
   margin: 0;
 }
 .custom-button {
-  background-color: var(--primary_400);
+  background-color: var(--primary);
   border: none;
   outline: none;
   border-radius: 14px;
@@ -131,15 +132,11 @@
   bottom: 0;
   right: 0;
   left: 0;
-  background: radial-gradient(
-      98% 96.48% at 0% 3.52%,
-      #29cfa3 0%,
-      #1c1b33 74.87%
-    );
-  border: 1px solid #17b9ff1a;
+  background-color: var(--backMainP);
+  border: 1px solid var(--neutral_ed);
   border-bottom-width: 0;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   padding: 0 20px;
   z-index: 50;
 }
@@ -147,18 +144,21 @@
   font-size: 20px;
   font-weight: 400;
   text-align: center;
-  margin: 32px 0;
+  margin-bottom: 16px;
+  padding: 16px 0;
+  color: var(--neutral_20);
+  border-bottom: 2px solid var(--neutral_ed);
 }
 /* End Custom Modal */
 
 /* Custom Table */
 .custom-table-header {
-  display: inline-block;
-  background-color: var(--primary_600);
-  border-bottom: 2px dashed var(--secondary_300);
-  padding: 10px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  color: var(--shade2);
+  display: inline-block;
+  background-color: var(--neutral_ed);
+  padding: 10px;
 }
 .lang-en .custom-table.with-header {
   border-top-left-radius: 0;
@@ -167,22 +167,23 @@
   border-top-right-radius: 0;
 }
 .custom-table {
-  background-color: var(--primary_600);
+  background-color: var(--neutral_ed);
   border-radius: 8px;
+  color: var(--neutral_40)
 }
 .custom-table td, .custom-table th {
   padding: 10px;
   text-align: center;
 }
 .custom-table td {
-  border: 1px solid var(--secondary_300);
+  border: 1px solid var(--neutral_df);
 }
 .custom-table td > * {
   margin: 0 auto;
 }
 .custom-table th {
-  border-inline-end: 1px solid var(--secondary_300);
-  border-bottom: 1px solid var(--secondary_300);
+  border-inline-end: 1px solid var(--neutral_df);
+  border-bottom: 1px solid var(--neutral_df);
 }
 .custom-table tbody tr:last-child > * {
   border-bottom: 0;

@@ -35,11 +35,13 @@ const MenuPasswordModal = ({ isOpen, onClose, onSubmit }) => {
             <CustomInput
               placeholder={t("menuPasswordModal:old_password")}
               containerStyle={{ marginBottom: 32 }}
+              type={"password"}
               onChange={(e) => setOldPassword(e.target.value)}
             />
             <CustomInput
               placeholder={t("menuPasswordModal:new_password")}
               containerStyle={{ marginBottom: 32 }}
+              type={"password"}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <CustomButton text={t("common:confirm")} style={{marginBottom: 32}} onClick={() => onSubmit(oldPassword, newPassword)} />
