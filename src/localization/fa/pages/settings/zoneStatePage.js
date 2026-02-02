@@ -1,6 +1,6 @@
 export default {
     title: "وضعیت زون",
     zone: "زون",
-    state: "وضیت",
+    state: "وضعیت",
     zone_number: "زون {{number}}",
 }

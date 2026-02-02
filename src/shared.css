@@ -175,9 +175,9 @@
   padding: 10px;
   text-align: center;
 }
-.custom-table td {
+/* .custom-table td {
   border: 1px solid var(--neutral_df);
-}
+} */
 .custom-table td > * {
   margin: 0 auto;
 }
