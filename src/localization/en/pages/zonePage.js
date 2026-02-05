@@ -1,6 +1,6 @@
 export default {
     zones_settings: "ZONE SETTINGS",
-    zones_status: "ZONE STATUS",
+    zones_status: "ZONE OUTPUT STATUS",
     zone_number: "Zone {{number}}",
     wireless: "Wireless",
     wired: "Wired",

@@ -1,6 +1,6 @@
 export default {
     zones_settings: "تنظیمات زون ها",
-    zones_status: "وضعیت زون ها",
+    zones_status: "وضعیت خروجی زون ها",
     zone_number: "زون {{number}}",
     wireless: "بی سیم",
     wired: "سیمی",

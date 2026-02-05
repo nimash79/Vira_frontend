@@ -3,5 +3,6 @@ export default {
     lock: "قفل",
     unlock: "باز",
     relays_status: "وضعیت رله ها",
-    relay_number: "رله {{number}}"
+    relay_number: "رله {{number}}",
+    refresh: "به روزرسانی",
 }

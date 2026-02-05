@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 
@@ -8,12 +8,16 @@ import PhoneIcon from "../components/icons/PhoneIcon";
 import DeviceIcon from "./../components/icons/DeviceIcon";
 import ZoneIcon from "../components/icons/ZoneIcon";
 import PowerIcon from "../components/icons/PowerIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { changeSendMethod } from "../reducers/sendMethodReducer";
 
 const MainLayout = ({ children }) => {
-  const [sendMethod, setSendMethod] = useState("wifi");
-
   const { t, i18n } = useTranslation();
   const location = useLocation();
+
+  const sendMethod = useSelector(state => state.sendMethod);
+  const dispatch = useDispatch();
+
   return (
     <div className="app-container">
       <div className="main-layout">
@@ -52,7 +56,7 @@ const MainLayout = ({ children }) => {
               className={
                 sendMethod === "wifi" ? "dual-button active" : "dual-button"
               }
-              onClick={() => setSendMethod("wifi")}
+              onClick={() => dispatch(changeSendMethod("wifi"))}
             >
               <WifiIcon active={sendMethod === "wifi"} />
               <p>{t("common:wifi")}</p>
@@ -61,7 +65,7 @@ const MainLayout = ({ children }) => {
               className={
                 sendMethod === "sms" ? "dual-button active" : "dual-button"
               }
-              onClick={() => setSendMethod("sms")}
+              onClick={() => dispatch(changeSendMethod("sms"))}
             >
               <SmsIcon active={sendMethod === "sms"} />
               <p>{t("common:sms")}</p>

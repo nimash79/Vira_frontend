@@ -88,6 +88,7 @@
   --bronze: #ffeceb;
   --error_light2: #fff2f2;
   --success: #00966d;
+  --success2: #04a045;
   --success_light2: #f3fdfa;
   --error: #c30000;
   --backMainP: #fbf7ff;
@@ -100,22 +101,15 @@
   box-sizing: border-box;
 }
 
-.lang-fa body {
+.lang-fa body, .lang-fa input, .lang-fa button {
   font-family: "Shabnam", "Segoe UI";
   direction: rtl;
 }
-.lang-fa input {
-  font-family: "Shabnam", "Segoe UI";
-  direction: rtl;
-}
-.lang-en body {
+.lang-en body, .lang-en input, .lang-en button {
   font-family: "Changa One", "Segoe UI";
   direction: ltr;
 }
-.lang-en input {
-  font-family: "Changa One", "Segoe UI";
-  direction: ltr;
-}
+
 input[type="submit"],
 button {
   cursor: pointer;
@@ -239,6 +233,47 @@ p {
 /* Home */
 .home-page .accordion {
   margin-top: 16px;
+}
+.home-page .button-icon {
+  background-color: var(--primary);
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  width: 100%;
+  padding: 1% 0;
+  height: 38px;
+  color: var(--neutral_f9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-page .button-icon.outline {
+  border: 1px solid var(--primary);
+  background-color: var(--bg_0);
+  color: var(--primary);
+}
+.home-page .button-icon-success {
+  background-color: var(--success2);
+}
+.home-page .button-icon-danger {
+  background-color: var(--error);
+}
+.home-page .button-icon-success.outline {
+  border: 1px solid var(--success2);
+  color: var(--success2);
+}
+.home-page .button-icon-success.outline svg {
+  fill: var(--success2);
+}
+.home-page .button-icon-danger.outline {
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+.home-page .button-icon-danger.outline svg {
+  fill: var(--error);
+}
+.home-page .button-icon span {
+  margin-inline-start: 8px;
 }
 /* End Home */
 
@@ -630,49 +665,14 @@ p {
 }
 /* End GSM CONTROL PAGE */
 
-/* ZONE SETTINGS Page */
-.zone-settings {
-  position: relative;
-  min-height: 100vh;
+/* ZONE Page */
+.zone-page {
+  margin-bottom: 106px;
 }
-.zone-settings .header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+.zone-page .accordion {
   margin-top: 16px;
-  text-wrap: nowrap;
 }
-.zone-settings .header .icon {
-  cursor: pointer;
-}
-.zone-settings .header > * {
-  flex: 0.33;
-}
-.zone-settings .header-title {
-  font-size: 20px;
-  flex: 1;
-  text-align: center;
-  color: var(--neutral_40);
-}
-.zone-settings .custom-table-header {
-  margin-top: 32px;
-}
-.zone-settings .custom-table {
-  margin: 0 auto;
-  font-size: 14px;
-  margin-top: 0;
-}
-
-.zone-settings td,
-.zone-settings th {
-  padding: 10px 5px;
-}
-.zone-settings .button {
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-/* End ZONE SETTINGS PAGE */
+/* End ZONE PAGE */
 
 /* REMOTE SETTINGS Page */
 .remote-settings {

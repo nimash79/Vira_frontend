@@ -9,13 +9,26 @@ import SettingsIcon from "./../components/icons/SettingsIcon";
 
 const ZonePage = () => {
   const { t } = useTranslation();
-  const [zoneNumber, setZoneNumber] = useState(1);
+  const [zoneNumber1, setZoneNumber1] = useState(1);
+  const [zoneNumber2, setZoneNumber2] = useState(1);
   const [zoneType, setZoneType] = useState("fire");
   const [operatinStatus, setOperatingStatus] = useState(false);
-  const [outputType, setOutputType] = useState("ding_dong");
+  const [outputType, setOutputType] = useState(["ding_dong"]);
+
+  const addOrRemoveOutputType = (value) => {
+    setOutputType(types => {
+      if (types.includes(value))
+        return types.filter(t => t !== value);
+      else {
+        const list = [...types];
+        list.push(value);
+        return list;
+      }
+    })
+  }
 
   return (
-    <div className="home-page">
+    <div className="zone-page">
       <details className="accordion">
         <summary className="title">
           <SettingsIcon />
@@ -24,8 +37,8 @@ const ZonePage = () => {
         </summary>
         <div className="content">
           <CustomDropdown
-            value={zoneNumber}
-            setValue={setZoneNumber}
+            value={zoneNumber1}
+            setValue={setZoneNumber1}
             options={[
               {
                 text: `${t("zonePage:zone_number", { number: 1 })} (${t("zonePage:wired")})`,
@@ -98,7 +111,9 @@ const ZonePage = () => {
               onClick={() => setZoneType("ordinary")}
             />
           </div>
-          <div className="section-title">{t("zonePage:operating_status")}</div>
+          {zoneNumber1 <= 5 && (
+            <>
+            <div className="section-title">{t("zonePage:operating_status")}</div>
           <div
             style={{
               display: "flex",
@@ -120,6 +135,12 @@ const ZonePage = () => {
               onClick={() => setOperatingStatus(true)}
             />
           </div>
+            </>
+          )}
+          <CustomButton
+            text={t("common:save")}
+            className="custom-save-accordion"
+          />
         </div>
       </details>
       <details className="accordion">
@@ -130,19 +151,49 @@ const ZonePage = () => {
         </summary>
         <div className="content">
           <CustomDropdown
-            value={zoneNumber}
-            setValue={setZoneNumber}
+            value={zoneNumber2}
+            setValue={setZoneNumber2}
             options={[
-              { text: t("zonePage:zone_number", { number: 1 }), value: 1 },
-              { text: t("zonePage:zone_number", { number: 2 }), value: 2 },
-              { text: t("zonePage:zone_number", { number: 3 }), value: 3 },
-              { text: t("zonePage:zone_number", { number: 4 }), value: 4 },
-              { text: t("zonePage:zone_number", { number: 5 }), value: 5 },
-              { text: t("zonePage:zone_number", { number: 6 }), value: 6 },
-              { text: t("zonePage:zone_number", { number: 7 }), value: 7 },
-              { text: t("zonePage:zone_number", { number: 8 }), value: 8 },
-              { text: t("zonePage:zone_number", { number: 9 }), value: 9 },
-              { text: t("zonePage:zone_number", { number: 10 }), value: 10 },
+              {
+                text: `${t("zonePage:zone_number", { number: 1 })} (${t("zonePage:wired")})`,
+                value: 1,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 2 })} (${t("zonePage:wired")})`,
+                value: 2,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 3 })} (${t("zonePage:wired")})`,
+                value: 3,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 4 })} (${t("zonePage:wired")})`,
+                value: 4,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 5 })} (${t("zonePage:wired")})`,
+                value: 5,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 6 })} (${t("zonePage:wireless")})`,
+                value: 6,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 7 })} (${t("zonePage:wireless")})`,
+                value: 7,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 8 })} (${t("zonePage:wireless")})`,
+                value: 8,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 9 })} (${t("zonePage:wireless")})`,
+                value: 9,
+              },
+              {
+                text: `${t("zonePage:zone_number", { number: 10 })} (${t("zonePage:wireless")})`,
+                value: 10,
+              },
             ]}
             containerStyle={{ width: "100%", marginBottom: 16 }}
           />
@@ -160,34 +211,38 @@ const ZonePage = () => {
             <CustomButton
               text={t("zonePage:ding_dong")}
               style={{ flexBasis: "32%" }}
-              outline={outputType != "ding_dong"}
-              onClick={() => setOutputType("ding_dong")}
+              outline={!outputType.includes("ding_dong")}
+              onClick={() => addOrRemoveOutputType("ding_dong")}
             />
             <CustomButton
               text={t("zonePage:speaker")}
               style={{ flexBasis: "32%" }}
-              outline={outputType != "speaker"}
-              onClick={() => setOutputType("speaker")}
+              outline={!outputType.includes("speaker")}
+              onClick={() => addOrRemoveOutputType("speaker")}
             />
             <CustomButton
               text={t("zonePage:siren")}
               style={{ flexBasis: "32%" }}
-              outline={outputType != "siren"}
-              onClick={() => setOutputType("siren")}
+              outline={!outputType.includes("siren")}
+              onClick={() => addOrRemoveOutputType("siren")}
             />
             <CustomButton
               text={t("zonePage:call")}
               style={{ flexBasis: "32%" }}
-              outline={outputType != "call"}
-              onClick={() => setOutputType("call")}
+              outline={!outputType.includes("call")}
+              onClick={() => addOrRemoveOutputType("call")}
             />
             <CustomButton
               text={t("zonePage:sms")}
               style={{ flexBasis: "32%" }}
-              outline={outputType != "sms"}
-              onClick={() => setOutputType("sms")}
+              outline={!outputType.includes("sms")}
+              onClick={() => addOrRemoveOutputType("sms")}
             />
           </div>
+          <CustomButton
+            text={t("common:save")}
+            className="custom-save-accordion"
+          />
         </div>
       </details>
     </div>

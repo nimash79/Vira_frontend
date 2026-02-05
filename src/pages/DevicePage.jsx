@@ -87,6 +87,10 @@ const DevicePage = () => {
             options={alarmPeriodOptions}
             containerStyle={{ width: "100%" }}
           />
+          <CustomButton
+            text={t("common:save")}
+            className="custom-save-accordion"
+          />
         </div>
       </details>
       <details className="accordion">
@@ -95,8 +99,9 @@ const DevicePage = () => {
           <span className="accordion-text">{t("devicePage:alarm_status")}</span>
           <ArrowDownIcon className="accordion-arrow" />
         </summary>
-        <div className="content dual-button">
-          <CustomButton
+        <div className="content">
+          <div className="dual-button">
+            <CustomButton
             text={t("devicePage:off")}
             outline={alarmStatus}
             onClick={() => setAlarmStatus(false)}
@@ -105,6 +110,11 @@ const DevicePage = () => {
             text={t("devicePage:on")}
             outline={!alarmStatus}
             onClick={() => setAlarmStatus(true)}
+          />
+          </div>
+          <CustomButton
+            text={t("common:save")}
+            className="custom-save-accordion"
           />
         </div>
       </details>
@@ -120,6 +130,10 @@ const DevicePage = () => {
             setValue={setSystemMode}
             options={systemModes}
             containerStyle={{ width: "100%" }}
+          />
+          <CustomButton
+            text={t("common:save")}
+            className="custom-save-accordion"
           />
         </div>
       </details>

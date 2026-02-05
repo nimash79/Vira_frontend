@@ -7,9 +7,9 @@ import ArrowDownIcon from "./../components/icons/ArrowDownIcon";
 import CustomDropdown from "../components/shared/CustomDropdown";
 import CustomInput from "./../components/shared/CustomInput";
 import PhoneIcon from "./../components/icons/PhoneIcon";
-import ListIcon from './../components/icons/ListIcon';
+import ListIcon from "./../components/icons/ListIcon";
 import SettingsIcon from "../components/icons/SettingsIcon";
-import LanguageIcon from './../components/icons/LanguageIcon';
+import LanguageIcon from "./../components/icons/LanguageIcon";
 
 const ContactsPage = () => {
   const [smsLanguage, setSmsLanguage] = useState("fa");
@@ -28,6 +28,19 @@ const ContactsPage = () => {
     "9309169090",
   ]);
   const { t, i18n } = useTranslation();
+  const [phoneTypes, setPhoneTypes] = useState(["manager"]);
+
+  const addOrRemovePhoneTypes = (value) => {
+    setPhoneTypes((types) => {
+      if (types.includes(value)) return types.filter((t) => t !== value);
+      else {
+        const list = [...types];
+        list.push(value);
+        return list;
+      }
+    });
+  };
+
   return (
     <div className="contacts">
       <details className="accordion">
@@ -39,16 +52,22 @@ const ContactsPage = () => {
           <ArrowDownIcon className="accordion-arrow" />
         </summary>
 
-        <div className="content dual-button">
+        <div className="content">
+          <div className="dual-button">
+            <CustomButton
+              text={t("contactsPage:fa")}
+              outline={smsLanguage != "fa"}
+              onClick={() => setSmsLanguage("fa")}
+            />
+            <CustomButton
+              text={t("contactsPage:en")}
+              outline={smsLanguage != "en"}
+              onClick={() => setSmsLanguage("en")}
+            />
+          </div>
           <CustomButton
-            text={t("contactsPage:fa")}
-            outline={smsLanguage != "fa"}
-            onClick={() => setSmsLanguage("fa")}
-          />
-          <CustomButton
-            text={t("contactsPage:en")}
-            outline={smsLanguage != "en"}
-            onClick={() => setSmsLanguage("en")}
+            text={t("common:save")}
+            className="custom-save-accordion"
           />
         </div>
       </details>
@@ -63,19 +82,49 @@ const ContactsPage = () => {
         <div className="content">
           <div className="enter-phones">
             <CustomDropdown
-              value={phoneNumber2}
-              setValue={setPhoneNumber2}
+              value={phoneNumber1}
+              setValue={setPhoneNumber1}
               options={[
-                { text: "1", value: 1 },
-                { text: "2", value: 2 },
-                { text: "3", value: 3 },
-                { text: "4", value: 4 },
-                { text: "5", value: 5 },
-                { text: "6", value: 6 },
-                { text: "7", value: 7 },
-                { text: "8", value: 8 },
-                { text: "9", value: 9 },
-                { text: "10", value: 10 },
+                {
+                  text: "1",
+                  value: 1,
+                },
+                {
+                  text: "2",
+                  value: 2,
+                },
+                {
+                  text: "3",
+                  value: 3,
+                },
+                {
+                  text: "4",
+                  value: 4,
+                },
+                {
+                  text: "5",
+                  value: 5,
+                },
+                {
+                  text: "6",
+                  value: 6,
+                },
+                {
+                  text: "7",
+                  value: 7,
+                },
+                {
+                  text: "8",
+                  value: 8,
+                },
+                {
+                  text: "9",
+                  value: 9,
+                },
+                {
+                  text: "10",
+                  value: 10,
+                },
               ]}
             />
             <CustomInput
@@ -103,20 +152,87 @@ const ContactsPage = () => {
         <div className="content">
           <div className="enter-phones">
             <CustomDropdown
-              value={phoneNumber1}
-              setValue={setPhoneNumber1}
+              value={phoneNumber2}
+              setValue={setPhoneNumber2}
               options={[
-                { text: "1", value: 1 },
-                { text: "2", value: 2 },
-                { text: "3", value: 3 },
-                { text: "4", value: 4 },
-                { text: "5", value: 5 },
-                { text: "6", value: 6 },
-                { text: "7", value: 7 },
-                { text: "8", value: 8 },
-                { text: "9", value: 9 },
-                { text: "10", value: 10 },
+                {
+                  text: t("contactsPage:phone_number", { number: 1 }),
+                  value: 1,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 2 }),
+                  value: 2,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 3 }),
+                  value: 3,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 4 }),
+                  value: 4,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 5 }),
+                  value: 5,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 6 }),
+                  value: 6,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 7 }),
+                  value: 7,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 8 }),
+                  value: 8,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 9 }),
+                  value: 9,
+                },
+                {
+                  text: t("contactsPage:phone_number", { number: 10 }),
+                  value: 10,
+                },
               ]}
+              containerStyle={{ width: "100%" }}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              rowGap: 16,
+              justifyContent: "space-between",
+              marginBottom: 16,
+              marginTop: 16,
+            }}
+          >
+            <CustomButton
+              text={t("contactsPage:manager")}
+              style={{ flexBasis: "45%" }}
+              outline={!phoneTypes.includes("manager")}
+              onClick={() => addOrRemovePhoneTypes("manager")}
+            />
+            <CustomButton
+              text={t("contactsPage:report")}
+              style={{ flexBasis: "45%" }}
+              outline={!phoneTypes.includes("report")}
+              onClick={() => addOrRemovePhoneTypes("report")}
+            />
+            <CustomButton
+              text={t("contactsPage:guard")}
+              style={{ flexBasis: "45%" }}
+              outline={!phoneTypes.includes("guard")}
+              onClick={() => addOrRemovePhoneTypes("guard")}
+            />
+            <CustomButton
+              text={t("contactsPage:lobyman")}
+              style={{ flexBasis: "45%" }}
+              outline={!phoneTypes.includes("lobyman")}
+              onClick={() => addOrRemovePhoneTypes("lobyman")}
             />
           </div>
           <CustomButton

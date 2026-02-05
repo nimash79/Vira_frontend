@@ -4,4 +4,5 @@ export default {
     unlock: "Unlock",
     relays_status: "RELAYS STATUS",
     relay_number: "Relay {{number}}",
+    refresh: "Refresh",
 }
