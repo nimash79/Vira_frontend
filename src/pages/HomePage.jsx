@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const { t, i18n } = useTranslation();
 
+  const [receiverNumber, setReceiverNumber] = useState("+1234567890");
   const [deviceStatus1, setDeviceStatus1] = useState(false);
   const [deviceStatus2, setDeviceStatus2] = useState(false);
   const [relayNumber, setRelayNumber] = useState(1);
@@ -80,6 +81,9 @@ const HomePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={() => {
+              window.location.href = `sms:${receiverNumber}?body=${encodeURIComponent(`fixtext*1234*5678*${deviceStatus1 ? 1 : 0}#`)}`;
+            }}
           />
         </div>
       </details>
