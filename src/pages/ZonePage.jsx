@@ -6,6 +6,8 @@ import CustomButton from "../components/shared/CustomButton";
 import CustomDropdown from "./../components/shared/CustomDropdown";
 import ZoneIcon from "./../components/icons/ZoneIcon";
 import SettingsIcon from "./../components/icons/SettingsIcon";
+import { OPCODE } from "../utils/constants";
+import { binToNumber, createCommand, getAlarmNumber } from "../utils/helper";
 
 const ZonePage = () => {
   const { t } = useTranslation();
@@ -16,16 +18,38 @@ const ZonePage = () => {
   const [outputType, setOutputType] = useState(["ding_dong"]);
 
   const addOrRemoveOutputType = (value) => {
-    setOutputType(types => {
-      if (types.includes(value))
-        return types.filter(t => t !== value);
+    setOutputType((types) => {
+      if (types.includes(value)) return types.filter((t) => t !== value);
       else {
         const list = [...types];
         list.push(value);
         return list;
       }
-    })
-  }
+    });
+  };
+
+  const saveZoneSettings = () => {
+    const isOpen = zoneNumber1 > 5 ? "0" : operatinStatus ? "1" : "0";
+    const isFire = zoneType === "fire" ? "1" : "0";
+    const is24h = zoneType === "24h" ? "1" : "0";
+    const isOrdinary = zoneType === "ordinary" ? "1" : "0";
+    const hex = binToNumber(isOrdinary + is24h + isFire + isOpen);
+    const vars = [zoneNumber1 - 1, hex];
+    const command = createCommand(OPCODE.ZONES_SETTINGS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  };
+
+  const saveOutputSettings = () => {
+    const isDingDong = outputType.includes("ding_dong") ? "1" : "0";
+    const isSpeaker = outputType.includes("speaker") ? "1" : "0";
+    const isSiren = outputType.includes("siren") ? "1" : "0";
+    const isCall = outputType.includes("call") ? "1" : "0";
+    const isSms = outputType.includes("sms") ? "1" : "0";
+    const hex = binToNumber(isSms + isCall + isSiren + isSpeaker + isDingDong);
+    const vars = [zoneNumber2 - 1, hex];
+    const command = createCommand(OPCODE.OUTPUT_SETTINGS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  };
 
   return (
     <div className="zone-page">
@@ -113,33 +137,36 @@ const ZonePage = () => {
           </div>
           {zoneNumber1 <= 5 && (
             <>
-            <div className="section-title">{t("zonePage:operating_status")}</div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 16,
-            }}
-          >
-            <CustomButton
-              text={t("zonePage:close")}
-              style={{ flexBasis: "45%" }}
-              outline={operatinStatus}
-              onClick={() => setOperatingStatus(false)}
-            />
-            <CustomButton
-              text={t("zonePage:open")}
-              style={{ flexBasis: "45%" }}
-              outline={!operatinStatus}
-              onClick={() => setOperatingStatus(true)}
-            />
-          </div>
+              <div className="section-title">
+                {t("zonePage:operating_status")}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 16,
+                }}
+              >
+                <CustomButton
+                  text={t("zonePage:close")}
+                  style={{ flexBasis: "45%" }}
+                  outline={operatinStatus}
+                  onClick={() => setOperatingStatus(false)}
+                />
+                <CustomButton
+                  text={t("zonePage:open")}
+                  style={{ flexBasis: "45%" }}
+                  outline={!operatinStatus}
+                  onClick={() => setOperatingStatus(true)}
+                />
+              </div>
             </>
           )}
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveZoneSettings}
           />
         </div>
       </details>
@@ -242,6 +269,7 @@ const ZonePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveOutputSettings}
           />
         </div>
       </details>

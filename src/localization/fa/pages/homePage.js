@@ -5,4 +5,9 @@ export default {
     relays_status: "وضعیت رله ها",
     relay_number: "رله {{number}}",
     refresh: "به روزرسانی",
+    alarm_number: "شماره دزدگیر",
+    phone_placeholder: "شماره موبایل را وارد کنید ...",
+    alarm_password: "رمز دزدگیر",
+    password_placeholder: "رمز را وارد کنید ...",
+    validation: "خطای اعتبارسنجی",
 }

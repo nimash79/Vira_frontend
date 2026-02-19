@@ -10,10 +10,14 @@ import PhoneIcon from "./../components/icons/PhoneIcon";
 import ListIcon from "./../components/icons/ListIcon";
 import SettingsIcon from "../components/icons/SettingsIcon";
 import LanguageIcon from "./../components/icons/LanguageIcon";
+import { binToNumber, createCommand, getAlarmNumber } from "../utils/helper";
+import { OPCODE } from "../utils/constants";
+import { useSelector } from "react-redux";
 
 const ContactsPage = () => {
   const [smsLanguage, setSmsLanguage] = useState("fa");
   const [phoneNumber1, setPhoneNumber1] = useState(1);
+  const [mobileNumber, setMobileNumber] = useState("");
   const [phoneNumber2, setPhoneNumber2] = useState(1);
   const [phoneNumbers, setPhoneNumbers] = useState([
     "9309167845",
@@ -27,8 +31,11 @@ const ContactsPage = () => {
     "9309168080",
     "9309169090",
   ]);
-  const { t, i18n } = useTranslation();
   const [phoneTypes, setPhoneTypes] = useState(["manager"]);
+
+  const sendMethod = useSelector((state) => state.sendMethod);
+
+  const { t, i18n } = useTranslation();
 
   const addOrRemovePhoneTypes = (value) => {
     setPhoneTypes((types) => {
@@ -39,6 +46,29 @@ const ContactsPage = () => {
         return list;
       }
     });
+  };
+
+  const saveSmsLanguage = () => {
+    const vars = [smsLanguage == "en" ? 1 : 0];
+    const command = createCommand(OPCODE.SMS_LANGUAGE, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  };
+
+  const savePhoneNumbers = () => {
+    const vars = [phoneNumber1 - 1, mobileNumber];
+    const command = createCommand(OPCODE.PHONES, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  };
+
+  const savePhoneNumberSettings = () => {
+    const isManager = phoneTypes.includes("manager") ? "1" : "0";
+    const isReport = phoneTypes.includes("report") ? "1" : "0";
+    const isGuard = phoneTypes.includes("guard") ? "1" : "0";
+    const isLobyman = phoneTypes.includes("lobyman") ? "1" : "0";
+    const hex = binToNumber(isLobyman + isGuard + isReport + isManager);
+    const vars = [phoneNumber2 - 1, hex];
+    const command = createCommand(OPCODE.PHONES_SETTINGS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
   };
 
   return (
@@ -68,6 +98,7 @@ const ContactsPage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveSmsLanguage}
           />
         </div>
       </details>
@@ -105,37 +136,19 @@ const ContactsPage = () => {
                   text: "5",
                   value: 5,
                 },
-                {
-                  text: "6",
-                  value: 6,
-                },
-                {
-                  text: "7",
-                  value: 7,
-                },
-                {
-                  text: "8",
-                  value: 8,
-                },
-                {
-                  text: "9",
-                  value: 9,
-                },
-                {
-                  text: "10",
-                  value: 10,
-                },
               ]}
             />
             <CustomInput
               placeholder={t("contactsPage:phone_placeholder")}
               containerStyle={{ flex: 1, marginInlineStart: 16 }}
               type="number"
+              onChange={(e) => setMobileNumber(e.target.value)}
             />
           </div>
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={savePhoneNumbers}
           />
         </div>
       </details>
@@ -174,26 +187,6 @@ const ContactsPage = () => {
                 {
                   text: t("contactsPage:phone_number", { number: 5 }),
                   value: 5,
-                },
-                {
-                  text: t("contactsPage:phone_number", { number: 6 }),
-                  value: 6,
-                },
-                {
-                  text: t("contactsPage:phone_number", { number: 7 }),
-                  value: 7,
-                },
-                {
-                  text: t("contactsPage:phone_number", { number: 8 }),
-                  value: 8,
-                },
-                {
-                  text: t("contactsPage:phone_number", { number: 9 }),
-                  value: 9,
-                },
-                {
-                  text: t("contactsPage:phone_number", { number: 10 }),
-                  value: 10,
                 },
               ]}
               containerStyle={{ width: "100%" }}
@@ -238,11 +231,24 @@ const ContactsPage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={savePhoneNumberSettings}
           />
         </div>
       </details>
 
-      <details className="accordion">
+      <details
+        className="accordion"
+        style={
+          sendMethod == "sms"
+            ? {
+                opacity: 0.5,
+                cursor: "not-allowed",
+                pointerEvents: "none",
+                userSelect: "none",
+              }
+            : {}
+        }
+      >
         <summary className="title">
           <ListIcon />
           <span className="accordion-text">

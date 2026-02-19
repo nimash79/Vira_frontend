@@ -15,6 +15,8 @@ import CustomButton from "./../components/shared/CustomButton";
 import CustomCalendarInput from "./../components/shared/CustomCalendarInput";
 import CustomTimeInput from './../components/shared/CustomTimeInput';
 import TimeIcon from "../components/icons/TimeIcon";
+import { createCommand, formatTimeToHHmmss, getAlarmNumber, toMiladiYYMMDD } from "../utils/helper";
+import { OPCODE } from "../utils/constants";
 
 const DevicePage = () => {
   const { t, i18n } = useTranslation();
@@ -25,7 +27,6 @@ const DevicePage = () => {
   const [menuNewPassword, setMenuNewPassword] = useState();
   const [smsOldPassword, setSmsOldPassword] = useState();
   const [smsNewPassword, setSmsNewPassword] = useState();
-  const [systemMode, setSystemMode] = useState(1);
   const [systemModes, setSystemModes] = useState([
     { value: 1, text: "1" },
     { value: 2, text: "2" },
@@ -39,6 +40,7 @@ const DevicePage = () => {
     { value: 5, text: t("devicePage:minute_number", { number: 5 }) },
   ]);
   const [alarmStatus, setAlarmStatus] = useState(false);
+  const [systemMode, setSystemMode] = useState(1);
   const [doubleSecureStatus, setDoubleSecureStatus] = useState(false);
   const [doubleSecure, setDoubleSecure] = useState(15);
   const [doubleSecureOptions, setDoubleSecureOptions] = useState([
@@ -46,6 +48,54 @@ const DevicePage = () => {
     { value: 30, text: t("devicePage:second_number", { number: 30 }) },
     { value: 45, text: t("devicePage:second_number", { number: 45 }) },
   ]);
+
+  const saveTimeSettings = () => {
+    const vars = [formatTimeToHHmmss(time), toMiladiYYMMDD(date?.format?.("YYYY/MM/DD"))]
+    const command = createCommand(OPCODE.TIME_SETTINGS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveAlarmPeriod = () => {
+    const vars = [alarmPeriod]
+    const command = createCommand(OPCODE.ALARM_PERIOD, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveAlarmStatus = () => {
+    const vars = [alarmStatus ? 1 : 0]
+    const command = createCommand(OPCODE.ALARM_STATUS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveSystemMode = () => {
+    const vars = [systemMode - 1]
+    const command = createCommand(OPCODE.SYSTEM_MODE, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveTest = (type) => {
+    const vars = [type]
+    const command = createCommand(OPCODE.TEST, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveDoubleSecure = () => {
+    const vars = [doubleSecureStatus ? 1 : 0, doubleSecure]
+    const command = createCommand(OPCODE.DOUBLE_SECURE, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveMenuPassword = () => {
+    const vars = [menuOldPassword, menuNewPassword]
+    const command = createCommand(OPCODE.PASSWORD_MENU, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
+
+  const saveSmsPassword = () => {
+    const vars = [smsOldPassword, smsNewPassword]
+    const command = createCommand(OPCODE.PASSWORD_SMS, vars);
+    window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
+  }
 
   return (
     <div className="device-page">
@@ -65,12 +115,14 @@ const DevicePage = () => {
           />
           <CustomTimeInput
             icon={<TimeIcon />}
+            step={1}
             value={time}
             onChange={(e) => setTime(e.target.value)}
           />
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveTimeSettings}
           />
         </div>
       </details>
@@ -90,6 +142,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveAlarmPeriod}
           />
         </div>
       </details>
@@ -115,6 +168,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveAlarmStatus}
           />
         </div>
       </details>
@@ -134,6 +188,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveSystemMode}
           />
         </div>
       </details>
@@ -156,26 +211,32 @@ const DevicePage = () => {
             <CustomButton
               text={t("devicePage:alarm")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(0)}
             />
             <CustomButton
               text={t("devicePage:siren")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(1)}
             />
             <CustomButton
               text={t("devicePage:ding_dong")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(2)}
             />
             <CustomButton
               text={t("devicePage:tcall")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(3)}
             />
             <CustomButton
               text={t("devicePage:gcall")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(4)}
             />
             <CustomButton
               text={t("devicePage:sms")}
               style={{ flexBasis: "32%" }}
+              onClick={() => saveTest(5)}
             />
           </div>
         </div>
@@ -210,6 +271,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveDoubleSecure}
           />
         </div>
       </details>
@@ -236,6 +298,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveMenuPassword}
           />
         </div>
       </details>
@@ -262,6 +325,7 @@ const DevicePage = () => {
           <CustomButton
             text={t("common:save")}
             className="custom-save-accordion"
+            onClick={saveSmsPassword}
           />
         </div>
       </details>

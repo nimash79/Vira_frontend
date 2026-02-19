@@ -1,7 +1,20 @@
-export const accountRequiredRoutes = [
-    "/view-account",
-    "/charge",
-    "/transfer",
-    "/block",
-    "/transactions"
-];
+export const FIX_TEXT = "JAHESH";
+
+export const OPCODE = {
+  DEVICE_STATUS: "01",
+  RELAY_STATUS: "02",
+  SMS_LANGUAGE: "03",
+  PHONES: "04",
+  PHONES_SETTINGS: "05",
+  PHONES_LIST: "06",
+  TIME_SETTINGS: "07",
+  ALARM_PERIOD: "08",
+  ALARM_STATUS: "09",
+  SYSTEM_MODE: "0A",
+  TEST: "0B",
+  DOUBLE_SECURE: "0C",
+  PASSWORD_MENU: "0D",
+  PASSWORD_SMS: "0E",
+  ZONES_SETTINGS: "0F",
+  OUTPUT_SETTINGS: "10",
+};
