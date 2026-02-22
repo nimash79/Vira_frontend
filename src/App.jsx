@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { useLocation } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
@@ -5,20 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 import HomePage from "./pages/HomePage";
-import Login from "./pages/authentication/Login";
-import Logout from "./pages/authentication/Logout";
-import Register from "./pages/authentication/Register";
-import VerificationPage from "./pages/authentication/VerificationPage";
-import ForgetPasswordPage from "./pages/authentication/ForgetPasswordPage";
-import ResetPasswordPage from "./pages/authentication/ResetPasswordPage";
-import GsmControlPage from "./pages/settings/GsmControlPage";
-import ZoneSettingsPage from "./pages/settings/ZoneSettingsPage";
-import RemoteSettingsPage from "./pages/settings/RemoteSettingsPage";
-import ZoneStatePage from "./pages/settings/ZoneStatePage";
-import WiredZoneSettingsPage from "./pages/settings/WiredZoneSettingsPage";
-import WirelessZoneSettingsPage from "./pages/settings/WirelessZoneSettingsPage";
-import i18n from "./localization/i18n";
-import { useEffect } from "react";
 import DevicePage from "./pages/DevicePage";
 import ContactsPage from "./pages/ContactsPage";
 import ZonePage from "./pages/ZonePage";
@@ -31,28 +18,11 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route element={<MainLayout />}>
           {/* Main Pages */}
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" Component={HomePage} />
           <Route path="/device" Component={DevicePage} />
           <Route path="/contacts" Component={ContactsPage} />
           <Route path="/zone" Component={ZonePage} />
           {/* End Main Pages */}
-          <Route path="/register" Component={Register} />
-          <Route path="/verification" Component={VerificationPage} />
-          <Route path="/forget-password" Component={ForgetPasswordPage} />
-          <Route path="/reset-password" Component={ResetPasswordPage} />
-          <Route path="/login" Component={Login} />
-          <Route path="/logout" Component={Logout} />
-          {/* Settings Pages */}
-          <Route path="/gsm-control" Component={GsmControlPage} />
-          <Route path="/zone-settings" Component={ZoneSettingsPage} />
-          <Route path="/wiredzone-settings" Component={WiredZoneSettingsPage} />
-          <Route
-            path="/wirelesszone-settings"
-            Component={WirelessZoneSettingsPage}
-          />
-          <Route path="/zone-state" Component={ZoneStatePage} />
-          <Route path="/remote-settings" Component={RemoteSettingsPage} />
-          {/* End Settings Pages */}
         </Route>
       </Routes>
     </AnimatePresence>

@@ -8,9 +8,6 @@ import zoneStatePage from "./pages/settings/zoneStatePage";
 import contactsPage from "./pages/contactsPage";
 import zonePage from "./pages/zonePage";
 
-import menuPasswordModal from "./modals/menuPasswordModal";
-import smsPasswordModal from "./modals/smsPasswordModal";
-
 export default {
   common,
   homePage,
@@ -18,8 +15,6 @@ export default {
   zoneStatePage,
   remoteSettingsPage,
   gsmControlPage,
-  menuPasswordModal,
-  smsPasswordModal,
   devicePage,
   contactsPage,
   zonePage,

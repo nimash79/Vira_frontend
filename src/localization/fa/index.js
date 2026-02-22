@@ -10,9 +10,6 @@ import devicePage from "./pages/devicePage";
 import contactsPage from "./pages/contactsPage";
 import zonePage from "./pages/zonePage";
 
-import menuPasswordModal from "./modals/menuPasswordModal";
-import smsPasswordModal from "./modals/smsPasswordModal";
-
 export default {
   common,
   homePage,
@@ -22,8 +19,6 @@ export default {
   wirelessZoneSettingsPage,
   remoteSettingsPage,
   gsmControlPage,
-  menuPasswordModal,
-  smsPasswordModal,
   devicePage,
   contactsPage,
   zonePage,
