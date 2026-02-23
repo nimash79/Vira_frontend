@@ -50,7 +50,8 @@ const DevicePage = () => {
   ]);
 
   const saveTimeSettings = () => {
-    const vars = [formatTimeToHHmmss(time), toMiladiYYMMDD(date?.format?.("YYYY/MM/DD"))]
+    // const vars = [formatTimeToHHmmss(time), toMiladiYYMMDD(date?.format?.("YYYY/MM/DD"))]
+    const vars = [formatTimeToHHmmss(time), date?.format?.("YYMMDD")]
     const command = createCommand(OPCODE.TIME_SETTINGS, vars);
     window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
   }
