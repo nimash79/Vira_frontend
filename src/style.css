@@ -231,6 +231,9 @@ p {
 /* End Athentication */
 
 /* Home */
+.home-page {
+  margin-bottom: 106px;
+}
 .home-page .accordion {
   margin-top: 16px;
 }

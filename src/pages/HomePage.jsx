@@ -179,7 +179,7 @@ const HomePage = () => {
                 width={20}
                 height={20}
               />
-              <span>{t("homePage:lock")}</span>
+              <span>{t("homePage:off")}</span>
             </button>
             <button
               type="button"
@@ -195,7 +195,7 @@ const HomePage = () => {
                 width={20}
                 height={20}
               />
-              <span>{t("homePage:unlock")}</span>
+              <span>{t("homePage:on")}</span>
             </button>
           </div>
           <CustomButton

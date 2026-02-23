@@ -2,6 +2,8 @@ export default {
     device_status: "وضعیت دستگاه",
     lock: "قفل",
     unlock: "باز",
+    off: "خاموش",
+    on: "روشن",
     relays_status: "وضعیت رله ها",
     relay_number: "رله {{number}}",
     refresh: "به روزرسانی",
