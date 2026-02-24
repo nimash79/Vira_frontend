@@ -25,8 +25,8 @@ const CustomCalendarInput = ({
       </div>
       <DatePicker
         ref={datePickerRef}
-        // calendar={persian}
-        // locale={persian_fa}
+        calendar={persian}
+        locale={persian_fa}
         value={value}
         onChange={onChange}
         containerClassName="custom-calendar-input"

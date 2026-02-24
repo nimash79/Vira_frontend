@@ -29,11 +29,11 @@ const ZonePage = () => {
   };
 
   const saveZoneSettings = () => {
-    const isOpen = zoneNumber1 > 5 ? "0" : operatinStatus ? "1" : "0";
+    const isOpen = zoneNumber1 > 5 ? "0" : operatinStatus ? "0" : "1";
     const isFire = zoneType === "fire" ? "1" : "0";
     const is24h = zoneType === "24h" ? "1" : "0";
     const isOrdinary = zoneType === "ordinary" ? "1" : "0";
-    const hex = binToNumber(isOrdinary + is24h + isFire + isOpen);
+    const hex = binToNumber(isOpen+isOrdinary+is24h+isFire);
     const vars = [zoneNumber1 - 1, hex];
     const command = createCommand(OPCODE.ZONES_SETTINGS, vars);
     window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;

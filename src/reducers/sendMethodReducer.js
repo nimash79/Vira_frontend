@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = "sms";
+const STORAGE_KEY = "send_method";
+const storedSendMethod = localStorage.getItem(STORAGE_KEY);
+const initialState = storedSendMethod || "sms";
 
 export const sendMethodSlice = createSlice({
   name: "sendMethod",
   initialState,
   reducers: {
     changeSendMethod: (state, action) => {
+      localStorage.setItem(STORAGE_KEY, action.payload);
       return action.payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { changeSendMethod } = sendMethodSlice.actions;
 
 export default sendMethodSlice.reducer;

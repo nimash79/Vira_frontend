@@ -20,6 +20,14 @@ import { notif_error, notif_success } from './../utils/toast';
 const HomePage = () => {
   const { t, i18n } = useTranslation();
 
+  const STORAGE_KEYS = {
+    alarmNumber: "alarm_number",
+    alarmPassword: "alarm_password",
+    deviceStatus: "home_device_status",
+    relayStatus: "home_relay_status",
+    relayNumber: "home_relay_number",
+  };
+
   const [deviceStatus, setDeviceStatus] = useState(false);
   const [relayStatus, setRelayStatus] = useState(false);
   const [relayNumber, setRelayNumber] = useState(1);
@@ -29,30 +37,57 @@ const HomePage = () => {
   const sendMethod = useSelector((state) => state.sendMethod);
 
   useEffect(() => {
-    let alarm_number = localStorage.getItem("alarm_number");
+    let alarm_number = localStorage.getItem(STORAGE_KEYS.alarmNumber);
     if (!alarm_number) {
       alarm_number = "123456789";
-      localStorage.setItem("alarm_number", alarm_number);
+      localStorage.setItem(STORAGE_KEYS.alarmNumber, alarm_number);
     }
     setAlarmNumber(alarm_number);
 
-    let alarm_password = localStorage.getItem("alarm_password");
+    let alarm_password = localStorage.getItem(STORAGE_KEYS.alarmPassword);
     if (!alarm_password) {
       alarm_password = "1234";
-      localStorage.setItem("alarm_password", alarm_password);
+      localStorage.setItem(STORAGE_KEYS.alarmPassword, alarm_password);
     }
     setPassword(alarm_password);
-  }, [])
+
+    const savedDeviceStatus = localStorage.getItem(STORAGE_KEYS.deviceStatus);
+    if (savedDeviceStatus !== null) {
+      setDeviceStatus(savedDeviceStatus === "true");
+    }
+
+    const savedRelayStatus = localStorage.getItem(STORAGE_KEYS.relayStatus);
+    if (savedRelayStatus !== null) {
+      setRelayStatus(savedRelayStatus === "true");
+    }
+
+    const savedRelayNumber = localStorage.getItem(STORAGE_KEYS.relayNumber);
+    if (savedRelayNumber !== null) {
+      setRelayNumber(Number(savedRelayNumber));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.deviceStatus, String(deviceStatus));
+  }, [deviceStatus]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.relayStatus, String(relayStatus));
+  }, [relayStatus]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.relayNumber, String(relayNumber));
+  }, [relayNumber]);
 
   const saveDeviceStatus = () => {
-    const vars = [deviceStatus ? 1 : 0];
+    const vars = [deviceStatus ? 0 : 1];
     const command = createCommand(OPCODE.DEVICE_STATUS, vars);
     console.log(`sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`);
     window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
   };
 
   const saveRelayStatus = () => {
-    const vars = [relayNumber, relayStatus ? 1 : 0];
+    const vars = [relayNumber, relayStatus ? 0 : 1];
     const command = createCommand(OPCODE.RELAY_STATUS, vars);
     window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
   };
@@ -62,18 +97,18 @@ const HomePage = () => {
       notif_error(t("homePage:validation"));
       return;
     }
-    localStorage.setItem("alarm_number", alarmNumber);
+    localStorage.setItem(STORAGE_KEYS.alarmNumber, alarmNumber);
     notif_success(t("common:success"));
-  }
+  };
 
   const saveAlarmPassword = () => {
     if (!password || !password.length) {
       notif_error(t("homePage:validation"));
       return;
     }
-    localStorage.setItem("alarm_password", password);
+    localStorage.setItem(STORAGE_KEYS.alarmPassword, password);
     notif_success(t("common:success"));
-  }
+  };
 
   return (
     <div className="home-page">
@@ -98,38 +133,22 @@ const HomePage = () => {
           <ArrowDownIcon className="accordion-arrow" />
         </summary>
         <div className="content">
-          <div className="dual-button">
+          <div className="lock-toggle-container">
             <button
               type="button"
-              className={
-                deviceStatus
-                  ? "button-icon button-icon-danger outline"
-                  : "button-icon button-icon-danger"
-              }
-              onClick={() => setDeviceStatus(false)}
+              className={`lock-toggle ${deviceStatus ? "unlocked" : "locked"}`}
+              onClick={() => setDeviceStatus((prev) => !prev)}
             >
-              <LockIcon
-                color={deviceStatus ? "#7b61ff" : "#f9f9f9"}
-                width={20}
-                height={20}
-              />
-              <span>{t("homePage:lock")}</span>
-            </button>
-            <button
-              type="button"
-              className={
-                deviceStatus
-                  ? "button-icon button-icon-success"
-                  : "button-icon button-icon-success outline"
-              }
-              onClick={() => setDeviceStatus(true)}
-            >
-              <UnlockIcon
-                color={deviceStatus ? "#f9f9f9" : "#7b61ff"}
-                width={20}
-                height={20}
-              />
-              <span>{t("homePage:unlock")}</span>
+              <span className="lock-toggle-core">
+                {deviceStatus ? (
+                  <UnlockIcon color="#1f7a48" width={34} height={34} />
+                ) : (
+                  <LockIcon color="#a72a2a" width={34} height={34} />
+                )}
+              </span>
+              <span className="lock-toggle-text">
+                {deviceStatus ? t("homePage:unlock") : t("homePage:lock")}
+              </span>
             </button>
           </div>
           <CustomButton

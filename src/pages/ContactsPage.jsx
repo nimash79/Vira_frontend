@@ -65,7 +65,7 @@ const ContactsPage = () => {
     const isReport = phoneTypes.includes("report") ? "1" : "0";
     const isGuard = phoneTypes.includes("guard") ? "1" : "0";
     const isLobyman = phoneTypes.includes("lobyman") ? "1" : "0";
-    const hex = binToNumber(isLobyman + isGuard + isReport + isManager);
+    const hex = binToNumber(isGuard+isManager+isReport+isLobyman);
     const vars = [phoneNumber2 - 1, hex];
     const command = createCommand(OPCODE.PHONES_SETTINGS, vars);
     window.location.href = `sms:${getAlarmNumber()}?body=${encodeURIComponent(command)}`;
